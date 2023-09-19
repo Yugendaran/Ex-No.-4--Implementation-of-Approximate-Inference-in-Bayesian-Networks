@@ -40,7 +40,7 @@ from pgmpy.factors.discrete import TabularCPD
 from pgmpy.sampling import GibbsSampling
 import networkx as nx
 import matplotlib.pyplot as plt
-Define the Bayesians network Structure
+
 network=BayesianNetwork([('Burglary','Alarm'),
                          ('Earthquake','Alarm'),
                          ('Alarm','JohnCalls'),
@@ -51,35 +51,35 @@ cpd_earthquake=TabularCPD(variable='Earthquake',variable_card=2,values=[[0.998],
 cpd_alarm=TabularCPD(variable='Alarm',variable_card=2,values=[[0.999,0.71,0.06,0.05],[0.001,0.29,0.94,0.95]],evidence=['Burglary','Earthquake'],evidence_card=[2,2])
 cpd_john_calls=TabularCPD(variable='JohnCalls',variable_card=2,values=[[0.95,0.1],[0.05,0.9]],evidence=['Alarm'],evidence_card=[2])
 cpd_mary_calls=TabularCPD(variable='MaryCalls',variable_card=2,values=[[0.99,0.3],[0.01,0.7]],evidence=['Alarm'],evidence_card=[2])
-Add CPDs to the network
+
 network.add_cpds(cpd_burglay,cpd_earthquake,cpd_alarm,cpd_john_calls,cpd_mary_calls)
-Print the Bayesian network structure
+
 print("Bayesian Network Structure:")
 print(network)
-Create a Directed Graph
+
 G=nx.DiGraph()
-Define nodes and Edges
+
 nodes=['Burglary', 'Earthquake', 'Alarm',' JohnCalls',' MaryCalls']
 edges=[('Burglary','Alarm'),('Earthquake','Alarm'),('Alarm','JohnCalls'),('Alarm','MaryCalls')]
-Add nodes and Edges to the Graph
+
 G.add_nodes_from(nodes)
 G.add_edges_from(edges)
-Set the positions from nodes
+
 pos={'Burglary':(0,0),'Earthquake':(2,0),'Alarm':(1,-2),'JohnCalls':(0,-4),'MaryCalls':(2,-4)}
-Draw the network
+
 nx.draw(G,pos,with_labels=True,node_size=1500,node_color='skyblue',font_size=10,font_weight='bold',arrowsize=20)
 plt.title("Bayesian Network:alarm Problem")
 plt.show()
-Initialize Gibbs Sampling for MCMC
+
 gibbs_sampler=GibbsSampling(network)
 Set the number of samples
 num_samples=10000
-Perfrom MNMC sampling
+
 samples=gibbs_sampler.sample(size=num_samples)
-Calculate approximate probabilities based on the samples
+
 query_variable='Burglary'
 query_result=samples[query_variable].value_counts(normalize=True)
-Print the approximate probabilities
+
 print('\n Approximate probabilities of {}:'.format(query_variable))
 print(query_result)
 
