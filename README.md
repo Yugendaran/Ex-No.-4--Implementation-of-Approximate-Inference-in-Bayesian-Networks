@@ -3,9 +3,8 @@
 
 ## Aim : 
    To construct a python program to implement approximate inference using Gibbs Sampling.
-
+   
 ## Algorithm:
-
 Step 1: Bayesian Network Definition and CPDs:<br>
 (i) Define the Bayesian network structure using the BayesianNetwork class from pgmpy.models.<br>
 (ii) Define Conditional Probability Distributions (CPDs) for each variable using the TabularCPD class.<br>
